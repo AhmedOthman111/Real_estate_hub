@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\wwwroot\\images\\ads\\4fcbfddb-369a-4f37-a802-7816d2b8a87e_Sc.jpg",
+      "PackagePath": "staticwebassets\\images\\ads\\4fcbfddb-369a-4f37-a802-7816d2b8a87e_Sc.jpg"
+    },
+    {
+      "Id": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\wwwroot\\images\\ads\\7a35a29c-1991-4bda-8505-4f972b4cec1c_Sc.jpg",
+      "PackagePath": "staticwebassets\\images\\ads\\7a35a29c-1991-4bda-8505-4f972b4cec1c_Sc.jpg"
+    },
+    {
+      "Id": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\wwwroot\\images\\ads\\9063125d-0f15-4830-9d46-cc8cf6ce84d4_Sc.jpg",
+      "PackagePath": "staticwebassets\\images\\ads\\9063125d-0f15-4830-9d46-cc8cf6ce84d4_Sc.jpg"
+    },
+    {
+      "Id": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\wwwroot\\images\\ads\\a3deae1d-5e1c-4834-85cc-aa7a57443a84_download.jpg",
+      "PackagePath": "staticwebassets\\images\\ads\\a3deae1d-5e1c-4834-85cc-aa7a57443a84_download.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.RealEstateHub.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.RealEstateHub.API.props",
+      "PackagePath": "build\\RealEstateHub.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.RealEstateHub.API.props",
+      "PackagePath": "buildMultiTargeting\\RealEstateHub.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.RealEstateHub.API.props",
+      "PackagePath": "buildTransitive\\RealEstateHub.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

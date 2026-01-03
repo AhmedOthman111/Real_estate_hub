@@ -1,0 +1,15 @@
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\bin\Debug\net8.0\RealEstateHub.Application.deps.json
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\bin\Debug\net8.0\RealEstateHub.Application.dll
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\bin\Debug\net8.0\RealEstateHub.Application.pdb
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\bin\Debug\net8.0\RealEstateHub.Domain.dll
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\bin\Debug\net8.0\RealEstateHub.Domain.pdb
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.csproj.AssemblyReference.cache
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.AssemblyInfoInputs.cache
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.AssemblyInfo.cs
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.csproj.CoreCompileInputs.cache
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.csproj.CopyComplete
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.dll
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\refint\RealEstateHub.Application.dll
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.pdb
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\ref\RealEstateHub.Application.dll

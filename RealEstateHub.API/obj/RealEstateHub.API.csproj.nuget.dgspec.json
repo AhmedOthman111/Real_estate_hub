@@ -1,0 +1,319 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\RealEstateHub.API.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\RealEstateHub.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\RealEstateHub.API.csproj",
+        "projectName": "RealEstateHub.API",
+        "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\RealEstateHub.API.csproj",
+        "packagesPath": "C:\\Users\\lenovo-\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lenovo-\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\RealEstateHub.Application.csproj": {
+                "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\RealEstateHub.Application.csproj"
+              },
+              "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Infrastructure\\RealEstateHub.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Infrastructure\\RealEstateHub.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\RealEstateHub.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\RealEstateHub.Application.csproj",
+        "projectName": "RealEstateHub.Application",
+        "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\RealEstateHub.Application.csproj",
+        "packagesPath": "C:\\Users\\lenovo-\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lenovo-\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\RealEstateHub.Domain.csproj": {
+                "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\RealEstateHub.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[12.1.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.1.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[13.1.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\RealEstateHub.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\RealEstateHub.Domain.csproj",
+        "projectName": "RealEstateHub.Domain",
+        "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\RealEstateHub.Domain.csproj",
+        "packagesPath": "C:\\Users\\lenovo-\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lenovo-\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Infrastructure\\RealEstateHub.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Infrastructure\\RealEstateHub.Infrastructure.csproj",
+        "projectName": "RealEstateHub.Infrastructure",
+        "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Infrastructure\\RealEstateHub.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\lenovo-\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lenovo-\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\RealEstateHub.Application.csproj": {
+                "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Application\\RealEstateHub.Application.csproj"
+              },
+              "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\RealEstateHub.Domain.csproj": {
+                "projectPath": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.Domain\\RealEstateHub.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.73.0, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.22, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.22, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

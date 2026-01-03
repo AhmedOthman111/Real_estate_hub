@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "0Bxl911bGzlCGvKVRM3wENyRPvoXFwuKeZSMLgLAOJg=",
+  "Source": "RealEstateHub.API",
+  "BasePath": "_content/RealEstateHub.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "RealEstateHub.API\\wwwroot",
+      "Source": "RealEstateHub.API",
+      "ContentRoot": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\wwwroot\\",
+      "BasePath": "_content/RealEstateHub.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
