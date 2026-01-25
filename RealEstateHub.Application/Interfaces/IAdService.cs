@@ -16,11 +16,12 @@ namespace RealEstateHub.Application.Interfaces
         Task ChangeStatusAsync(int id, string AUOwnerId);
         Task RenewAdAsync(int id, int durationDays, string AUOwnerId);
         Task<List<AdResponseDto>> GetMyAdsAsync(string AUOwnerId);
-        Task<AdResponseDto> GetAdByIdAsync(int id);
+        Task<AdWithAllDetailsDto> GetAdByIdAsync(int id);
         Task<PaginatedList<AdResponseDto>> GetAdsAsync(AdFilterDto filter);
         Task<IReadOnlyList<AdResponseDto>> GetAllPendingAds();
         Task ApproveAd(int AdId);
         Task RejectAd(int AdId, string? rejectionReason = null);
+        Task CheckExpirationAsync();
 
 
     }

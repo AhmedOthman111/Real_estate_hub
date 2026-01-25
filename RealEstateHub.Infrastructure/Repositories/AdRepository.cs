@@ -7,17 +7,12 @@ using RealEstateHub.Domain.Entities;
 using RealEstateHub.Domain.Enums;
 using RealEstateHub.Infrastructure.Data;
 using RealEstateHub.Infrastructure.ExternalServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateHub.Infrastructure.Repositories
 {
     public class AdRepository : GenericRepository<Ad>, IAdRepository
     {
-        public AdRepository(ApplicationDbContext context) : base(context) {}
+        public AdRepository(ApplicationDbContext context) : base(context) { }
 
         public async Task<IEnumerable<Ad>> GetActiveAdsAsync()
         {
@@ -28,12 +23,12 @@ namespace RealEstateHub.Infrastructure.Repositories
         }
         public async Task<Ad?> GetAdWithPhotos(int id)
         {
-             var ad = await _dbSet
-                .AsNoTracking()
-                .Include(x => x.Photos)
-                .Include(x => x.Category)
-                .Include(x => x.Owner)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var ad = await _dbSet
+               .AsNoTracking()
+               .Include(x => x.Photos)
+               .Include(x => x.Category)
+               .Include(x => x.Owner)
+               .FirstOrDefaultAsync(x => x.Id == id);
             if (ad == null) throw new NotFoundException("ad", id);
             return ad;
         }
@@ -50,13 +45,13 @@ namespace RealEstateHub.Infrastructure.Repositories
         public async Task<PaginatedList<Ad>> GetFilteredAdsAsync(AdFilterDto filter)
         {
             var query = _dbSet.AsQueryable().AsNoTracking();
-            
+
             query = query.Where(x => x.Status == AdStatus.Active);
 
-            if(!string.IsNullOrEmpty(filter.Search))
+            if (!string.IsNullOrEmpty(filter.Search))
             {
                 var search = filter.Search.Trim();
-               
+
                 query = query.Where(x =>
                     x.Title.Contains(search) ||
                     x.Description.Contains(search));
@@ -66,17 +61,17 @@ namespace RealEstateHub.Infrastructure.Repositories
             {
                 query = query.Where(x => x.Purpose == filter.Purpose.Value);
             }
-          
+
             if (!string.IsNullOrEmpty(filter.City))
             {
                 query = query.Where(x => x.City == filter.City);
             }
 
-            if(filter.MinPrice.HasValue) 
+            if (filter.MinPrice.HasValue)
             {
                 query = query.Where(x => x.Price >= filter.MinPrice.Value);
             }
-           
+
             if (filter.MaxPrice.HasValue)
             {
                 query = query.Where(x => x.Price <= filter.MaxPrice.Value);
@@ -131,6 +126,45 @@ namespace RealEstateHub.Infrastructure.Repositories
             return ad;
         }
 
+        public async Task<List<Ad>> GetAdsExpireTommrow()
+        {
+            var tomorrow = DateTime.UtcNow.Date.AddDays(1);
+            var dayAfterTomorrow = tomorrow.AddDays(1);
+
+            var ads = await _dbSet.Where(a => a.Status == AdStatus.Active &&
+                                         !a.ExpiryReminderSent &&
+                                         a.ExpireAt >= tomorrow &&
+                                         a.ExpireAt < dayAfterTomorrow)
+                            .Include(x => x.Owner).ToListAsync();
+            return ads;
+
+        }
+
+        public async Task<List<Ad>> GetExpiredAds()
+        {
+            var now = DateTime.UtcNow;
+
+            var ads = await _dbSet.Where(a => a.Status == AdStatus.Active &&
+                                        !a.ExpiredEmailSent &&
+                                         a.ExpireAt <= now)
+                                                          .Include(x => x.Owner)
+                                                          .ToListAsync();
+            return ads;
+        }
+
+        public async Task<Ad> GetAdWithAllData(int id)
+        {
+            var ad = await _dbSet
+               .AsNoTracking()
+               .Include(x => x.Category)
+               .Include(x => x.Owner)
+               .Include(x => x.Photos)
+               .Include(x => x.Comments)
+                        .ThenInclude(x => x.Reply)
+               .FirstOrDefaultAsync(x => x.Id == id);
+            if (ad == null) throw new NotFoundException("ad", id);
+            return ad;
+        }
 
 
 

@@ -1,6 +1,7 @@
 
 using Hangfire;
 using RealEstateHub.API.Middlewares;
+using RealEstateHub.Application.Interfaces;
 using RealEstateHub.Infrastructure;
 using RealEstateHub.Infrastructure.DataSeeder;
 
@@ -45,6 +46,8 @@ namespace RealEstateHub.API
                 var services = scope.ServiceProvider;
                 await IdentitySeeder.SeedAsync(services);
             }
+          
+            RecurringJob.AddOrUpdate<IAdService>( "check-ad-expiration", service => service.CheckExpirationAsync(), "0 0,12 * * *" ); // 12:00 AM & 12:00 PM UTC 
 
 
             app.Run();

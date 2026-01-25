@@ -17,6 +17,9 @@ namespace RealEstateHub.Application.Interfaces.IRep
         Task<PaginatedList<Ad>> GetFilteredAdsAsync(AdFilterDto filter);
         Task<IReadOnlyList<Ad>> GetPendingAdsAsync();
         Task<Ad?> GetAdWithOwner(int id);
+        Task<List<Ad>> GetExpiredAds();
+        Task<List<Ad>> GetAdsExpireTommrow();
+        Task<Ad> GetAdWithAllData(int id);
 
     }
 }

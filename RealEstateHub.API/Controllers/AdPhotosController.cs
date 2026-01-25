@@ -35,7 +35,6 @@ namespace RealEstateHub.API.Controllers
             var photoUrl = await _mediator.Send(new UploadAdPhotoCommand(adId, stream, file.FileName, ownerid));
 
             return Ok(new { Url = photoUrl });
-
         }
 
 

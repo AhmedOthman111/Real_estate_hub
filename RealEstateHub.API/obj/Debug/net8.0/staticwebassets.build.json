@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0Bxl911bGzlCGvKVRM3wENyRPvoXFwuKeZSMLgLAOJg=",
+  "Hash": "8Di0FTYnRP2lgVRtG4PYedqT9ZrVnhQ4QBpcHfMXtaY=",
   "Source": "RealEstateHub.API",
   "BasePath": "_content/RealEstateHub.API",
   "Mode": "Default",
@@ -15,5 +15,25 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\wwwroot\\images\\ads\\9601e49d-515c-41bc-a3cb-4ef3d938161a_IMG_1853.HEIC",
+      "SourceId": "RealEstateHub.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lenovo-\\Desktop\\project\\RealEstateHub\\RealEstateHub.API\\wwwroot\\",
+      "BasePath": "_content/RealEstateHub.API",
+      "RelativePath": "images/ads/9601e49d-515c-41bc-a3cb-4ef3d938161a_IMG_1853.HEIC",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ads\\9601e49d-515c-41bc-a3cb-4ef3d938161a_IMG_1853.HEIC"
+    }
+  ]
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RealEstateHub.Application.Interfaces.IRep;
+﻿using RealEstateHub.Application.Interfaces.IRep;
 
 namespace RealEstateHub.Application.Interfaces
 {
@@ -12,8 +7,9 @@ namespace RealEstateHub.Application.Interfaces
         IAdRepository Ad { get; }
         IOwnerRepository Owner { get; }
         ICategoryRepository Category { get; }
-
         IAdPhotosRepository AdPhotosRepo { get; }
+        ICommentRepository CommentRepo { get; }
+        IReplyRepository ReplyRepo { get; }
         Task SaveChangesAsync();
 
     }

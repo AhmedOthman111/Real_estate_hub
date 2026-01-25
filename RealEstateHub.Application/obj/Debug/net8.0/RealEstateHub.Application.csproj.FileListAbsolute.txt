@@ -13,3 +13,4 @@ C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Deb
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\refint\RealEstateHub.Application.dll
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.pdb
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\ref\RealEstateHub.Application.dll
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Application\obj\Debug\net8.0\RealEstateHub.Application.sourcelink.json

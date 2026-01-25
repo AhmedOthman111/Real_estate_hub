@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace RealEstateHub.Application.CQRS.Ads.Queries
 {
-    public record GetAdByIdQuery(int id) : IRequest<AdResponseDto>;
+    public record GetAdByIdQuery(int id) : IRequest<AdWithAllDetailsDto>;
 }

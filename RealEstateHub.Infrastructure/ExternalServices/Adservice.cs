@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RealEstateHub.Application.Common;
 using RealEstateHub.Application.CQRS.Ads.Dto;
+using RealEstateHub.Application.CQRS.CommentReply.DTO;
 using RealEstateHub.Application.Exceptions;
 using RealEstateHub.Application.Interfaces;
 using RealEstateHub.Domain.Entities;
@@ -16,12 +17,14 @@ namespace RealEstateHub.Infrastructure.ExternalServices
         private readonly IUnitOfWork _uow;
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailService _emailService;
+        private readonly ICacheService _cacheService;
 
-        public Adservice(IUnitOfWork unitOfWork, UserManager<AppUser> userManager, IEmailService emailService)
+        public Adservice(IUnitOfWork unitOfWork, UserManager<AppUser> userManager, IEmailService emailService, ICacheService cacheService)
         {
             _uow = unitOfWork;
             _userManager = userManager;
             _emailService = emailService;
+            _cacheService = cacheService;
         }
 
 
@@ -138,13 +141,75 @@ namespace RealEstateHub.Infrastructure.ExternalServices
 
         }
 
-        public async Task<AdResponseDto> GetAdByIdAsync(int id)
+        public async Task<AdWithAllDetailsDto> GetAdByIdAsync(int id)
         {
-            var ad = await _uow.Ad.GetAdWithPhotos(id);
+            var ad = await _uow.Ad.GetAdWithAllData(id);
 
             var AppUserOwner = await _userManager.FindByIdAsync(ad.Owner.AppUserId);
 
-            return MapToDto(ad, AppUserOwner, ad.Category);
+
+            var customerIds = ad.Comments
+                                    .Select(c => c.CustomerID)
+                                    .Distinct()
+                                    .ToList();
+
+            var customers = await _userManager.Users
+                                            .Where(u => customerIds.Contains(u.Id))
+                                            .ToDictionaryAsync(u => u.Id);
+
+            return new AdWithAllDetailsDto
+            {
+                Id = ad.Id,
+                Title = ad.Title,
+                Description = ad.Description,
+                Price = ad.Price,
+                AreaSize = ad.AreaSize,
+                City = ad.City,
+                Area = ad.Area,
+                Address = ad.Address,
+                Purpose = ad.Purpose.ToString(),
+                Priority = ad.Priority.ToString(),
+                Status = ad.Status.ToString(),
+                CreatedAt = ad.CreatedAt,
+                ExpireAt = ad.ExpireAt,
+                OwnerId = ad.OwnerId,
+                OwnerName = $"{AppUserOwner.FirstName} {AppUserOwner.LastName}",
+                CategoryName = ad.Category.Name,
+
+                PhotoUrls = ad.Photos
+                                   .OrderByDescending(p => p.IsMain)
+                                   .ThenBy(p => p.Id)
+                                   .Select(p => p.ImageUrl)
+                                   .ToList(),
+
+                Comments = ad.Comments
+                         .OrderByDescending(c => c.CreatedAt)
+                            .Select(c =>
+                            {
+                                var customer = customers[c.CustomerID];
+
+                                return new CommentResponseDto
+                                {
+                                    Id = c.Id,
+                                    AdId = ad.Id,
+                                    Content = c.Message,
+                                    CreatedAt = c.CreatedAt,
+                                    AuthorName = $"{customer.FirstName} {customer.LastName}",
+
+                                    Reply = c.Reply == null
+                                        ? null
+                                        : new ReplyResponseDto
+                                        {
+                                            Id = c.Reply.Id,
+                                            Content = c.Reply.Message,
+                                            CreatedAt = c.Reply.CreatedAt,
+                                            AuthorName = $"{AppUserOwner.FirstName} {AppUserOwner.LastName}"
+                                        }
+                                };
+                            })
+                            .ToList()
+            };
+
         }
 
         public async Task<PaginatedList<AdResponseDto>> GetAdsAsync(AdFilterDto filter)
@@ -235,6 +300,59 @@ namespace RealEstateHub.Infrastructure.ExternalServices
             }
         }
 
+
+        public async Task CheckExpirationAsync()
+        {
+
+            var adsWillExpire = await _uow.Ad.GetAdsExpireTommrow();
+            var expiredAds = await _uow.Ad.GetExpiredAds();
+
+            if (!adsWillExpire.Any() && !expiredAds.Any())
+                return;
+
+
+            foreach (Ad ad in adsWillExpire)
+            {
+                var AUOwner = await _userManager.FindByIdAsync(ad.Owner.AppUserId);
+
+                BackgroundJob.Enqueue<IEmailService>(x =>
+                                 x.SendAdExpiryReminderEmailAsync(
+                                                                   AUOwner.Email,
+                                                                   $"{AUOwner.FirstName} {AUOwner.LastName}",
+                                                                   ad.Title, ad.ExpireAt)
+                                                            );
+
+                ad.ExpiryReminderSent = true;
+                _uow.Ad.Update(ad);
+            }
+
+
+
+
+            if (expiredAds.Any())
+            {
+                foreach (Ad ad in expiredAds)
+                {
+                    var AUOwner = await _userManager.FindByIdAsync(ad.Owner.AppUserId);
+
+                    BackgroundJob.Enqueue<IEmailService>(x =>
+                                        x.SendAdExpiredEmailAsync(
+                                                                    AUOwner.Email,
+                                                                    $"{AUOwner.FirstName} {AUOwner.LastName}",
+                                                                    ad.Title, ad.ExpireAt)
+                                                        );
+
+                    ad.Status = AdStatus.Expired;
+                    ad.ExpiredEmailSent = true;
+
+                    _uow.Ad.Update(ad);
+                    await _cacheService.RemoveAsync($"ad:{ad.Id}");
+                }
+            }
+
+            await _uow.SaveChangesAsync();
+
+        }
 
 
         private AdResponseDto MapToDto(Ad ad, AppUser ownerappuser, Category category)

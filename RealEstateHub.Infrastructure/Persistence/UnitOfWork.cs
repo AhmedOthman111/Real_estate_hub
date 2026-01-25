@@ -17,14 +17,18 @@ namespace RealEstateHub.Infrastructure.Persistence
         public IOwnerRepository Owner { get; }
         public ICategoryRepository Category { get; }
         public IAdPhotosRepository AdPhotosRepo { get; }
+        public ICommentRepository CommentRepo { get; }
+        public IReplyRepository ReplyRepo { get; }
 
-        public UnitOfWork(ApplicationDbContext context, IAdRepository adRepository, IOwnerRepository owner, ICategoryRepository category, IAdPhotosRepository adPhotosRepo)
+        public UnitOfWork(ApplicationDbContext context, IAdRepository adRepository, IOwnerRepository owner, ICategoryRepository category, IAdPhotosRepository adPhotosRepo , ICommentRepository commentRepo, IReplyRepository replyRepo)
         {
             _context = context;
             Ad = adRepository;
             Owner = owner;
             Category = category;
             AdPhotosRepo = adPhotosRepo;
+            CommentRepo = commentRepo;
+            ReplyRepo = replyRepo;
         }
 
         public async Task SaveChangesAsync()

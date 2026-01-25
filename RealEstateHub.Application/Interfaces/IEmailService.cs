@@ -13,6 +13,8 @@ namespace RealEstateHub.Application.Interfaces
         Task SendAdApprovedEmailAsync( string toEmail, string ownerName, string adTitle );
         Task SendAdRejectedEmailAsync(string toEmail, string ownerName, string adTitle, string rejectionReason);
         Task SendAdRejectedWithoutReasonEmailAsync(string toEmail, string ownerName, string adTitle);
+        Task SendAdExpiryReminderEmailAsync(string toEmail, string ownerName, string adTitle, DateTime expiryDate);
+        Task SendAdExpiredEmailAsync(string toEmail, string ownerName, string adTitle, DateTime expiryDate);
 
     }
 }

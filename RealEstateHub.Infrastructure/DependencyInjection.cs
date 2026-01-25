@@ -97,6 +97,7 @@ namespace RealEstateHub.Infrastructure
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly));
 
+
             // register Validators
 
             services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
@@ -113,6 +114,8 @@ namespace RealEstateHub.Infrastructure
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<ICategoryRepository , CategoryRepository>();
             services.AddScoped<IAdPhotosRepository , AdPhotosRepository>();
+            services.AddScoped<ICommentRepository , CommentRepository>();
+            services.AddScoped<IReplyRepository , ReplyRepository>();
 
 
             
@@ -138,7 +141,9 @@ namespace RealEstateHub.Infrastructure
 
             services.AddScoped<IPhotoStorageService , LocalPhotoStorageService>();  
 
-            services.AddScoped<IAdPhotosService , AdPhotosService>();   
+            services.AddScoped<IAdPhotosService , AdPhotosService>();
+            
+            services.AddScoped<ICommentReplyService , CommentReplyService>();
 
 
 

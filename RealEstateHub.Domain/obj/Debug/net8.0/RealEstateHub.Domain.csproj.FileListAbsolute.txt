@@ -9,3 +9,4 @@ C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Domain\obj\Debug\ne
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Domain\obj\Debug\net8.0\refint\RealEstateHub.Domain.dll
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Domain\obj\Debug\net8.0\RealEstateHub.Domain.pdb
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Domain\obj\Debug\net8.0\ref\RealEstateHub.Domain.dll
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Domain\obj\Debug\net8.0\RealEstateHub.Domain.sourcelink.json

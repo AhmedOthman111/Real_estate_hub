@@ -28,7 +28,11 @@ namespace RealEstateHub.Domain.Entities
 
         public int DurationDays { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? ExpireAt { get; set; }
+
+        public bool ExpiryReminderSent { get; set; } = false;
+        public bool ExpiredEmailSent { get; set; } = false;
+
+        public DateTime ExpireAt { get; set; }
 
         // Relations
         public int OwnerId { get; set; }

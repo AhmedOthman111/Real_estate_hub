@@ -2,14 +2,8 @@
 using RealEstateHub.Application.Exceptions;
 using RealEstateHub.Application.Interfaces;
 using RealEstateHub.Infrastructure.Persistence.Configurations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 namespace RealEstateHub.Infrastructure.ExternalServices
 {
@@ -129,7 +123,7 @@ namespace RealEstateHub.Infrastructure.ExternalServices
         }
 
 
-        public async Task SendAdRejectedEmailAsync( string toEmail, string ownerName, string adTitle, string rejectionReason)
+        public async Task SendAdRejectedEmailAsync(string toEmail, string ownerName, string adTitle, string rejectionReason)
         {
             string subject = "Your Ad Was Rejected ❌ - Real Estate Hub";
 
@@ -174,7 +168,7 @@ namespace RealEstateHub.Infrastructure.ExternalServices
             await SendEmailAsync(toEmail, subject, body);
         }
 
-        public async Task SendAdRejectedWithoutReasonEmailAsync( string toEmail , string ownerName, string adTitle)
+        public async Task SendAdRejectedWithoutReasonEmailAsync(string toEmail, string ownerName, string adTitle)
         {
             string subject = "Your Ad Was Not Approved ❌ - Real Estate Hub";
 
@@ -213,6 +207,89 @@ namespace RealEstateHub.Infrastructure.ExternalServices
 
             await SendEmailAsync(toEmail, subject, body);
         }
+        public async Task SendAdExpiryReminderEmailAsync(string toEmail, string ownerName, string adTitle, DateTime expiryDate)
+        {
+            string subject = "Reminder: Your Ad Will Expire Tomorrow ⏰ - Real Estate Hub";
+
+            string body = $@"
+                <html>
+                <body style='font-family: Arial, sans-serif; background-color:#f9f9f9; padding:20px;'>
+                    <div style='max-width:600px; margin:auto; background:white; padding:20px; border-radius:8px;'>
+
+                        <h2 style='color:#FF9800;'>Hello {ownerName},</h2>
+
+                        <p>
+                            This is a friendly reminder that your ad
+                            <strong>""{adTitle}""</strong> will expire <strong>tomorrow</strong>.
+                        </p>
+
+                        <p>
+                            <strong>Expiration date:</strong> {expiryDate:dddd, MMMM dd, yyyy}
+                        </p>
+
+                        <p>
+                            To keep your ad visible to potential buyers, please consider renewing it before it expires.
+                        </p>
+
+                        <p style='margin-top:20px;'>
+                            If you don’t take any action, your ad will automatically expire and no longer be visible.
+                        </p>
+
+                        <p style='color:#777; font-size:12px; margin-top:30px;'>
+                            Thank you for using Real Estate Hub.<br/>
+                            Real Estate Hub Team
+                        </p>
+
+                    </div>
+                </body>
+                </html>";
+
+            await SendEmailAsync(toEmail, subject, body);
+        }
+        public async Task SendAdExpiredEmailAsync(string toEmail, string ownerName, string adTitle, DateTime expiryDate)
+        {
+            string subject = "Your Ad Has Expired ❌ - Real Estate Hub";
+
+            string body = $@"
+            <html>
+            <body style='font-family: Arial, sans-serif; background-color:#f9f9f9; padding:20px;'>
+                <div style='max-width:600px; margin:auto; background:white; padding:20px; border-radius:8px;'>
+
+                    <h2 style='color:#E53935;'>Hello {ownerName},</h2>
+
+                    <p>
+                        We would like to inform you that your ad
+                        <strong>""{adTitle}""</strong> has expired.
+                    </p>
+
+                    <p>
+                        <strong>Expired on:</strong> {expiryDate:dddd, MMMM dd, yyyy}
+                    </p>
+
+                    <p>
+                        Your ad is no longer visible to users on <strong>Real Estate Hub</strong>.
+                    </p>
+
+                    <p>
+                        You can renew or repost your ad at any time to make it active again.
+                    </p>
+
+                    <p style='margin-top:20px;'>
+                        If you need help or have questions, our support team is always here for you.
+                    </p>
+
+                    <p style='color:#777; font-size:12px; margin-top:30px;'>
+                        Thank you for choosing Real Estate Hub.<br/>
+                        Real Estate Hub Team
+                    </p>
+
+                </div>
+            </body>
+            </html>";
+
+            await SendEmailAsync(toEmail, subject, body);
+        }
+
 
     }
 }

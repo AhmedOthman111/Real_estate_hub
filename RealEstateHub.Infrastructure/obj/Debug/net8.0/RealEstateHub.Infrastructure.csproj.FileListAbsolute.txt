@@ -17,3 +17,4 @@ C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Infrastructure\obj\
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Infrastructure\obj\Debug\net8.0\RealEstateHub.Infrastructure.pdb
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Infrastructure\obj\Debug\net8.0\RealEstateHub.Infrastructure.genruntimeconfig.cache
 C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Infrastructure\obj\Debug\net8.0\ref\RealEstateHub.Infrastructure.dll
+C:\Users\lenovo-\Desktop\project\RealEstateHub\RealEstateHub.Infrastructure\obj\Debug\net8.0\RealEstateHub.Infrastructure.sourcelink.json

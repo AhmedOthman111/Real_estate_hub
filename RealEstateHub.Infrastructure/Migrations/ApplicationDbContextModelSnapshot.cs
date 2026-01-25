@@ -195,8 +195,14 @@ namespace RealEstateHub.Infrastructure.Migrations
                     b.Property<int>("DurationDays")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ExpireAt")
+                    b.Property<DateTime>("ExpireAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("ExpiredEmailSent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ExpiryReminderSent")
+                        .HasColumnType("bit");
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("int");
