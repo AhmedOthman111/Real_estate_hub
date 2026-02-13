@@ -399,7 +399,6 @@ namespace RealEstateHub.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Review")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 

@@ -2,12 +2,7 @@
 using RealEstateHub.Application.Exceptions;
 using RealEstateHub.Application.Interfaces.IRep;
 using RealEstateHub.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateHub.Infrastructure.Repositories
 {
@@ -34,10 +29,12 @@ namespace RealEstateHub.Infrastructure.Repositories
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             var resultlist = await _dbSet.Where(predicate).ToListAsync();
-            if (resultlist.Count == 0) throw new NotFoundException(typeof(T).Name, "matching criteria");
             return resultlist;
         }
-     
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.AnyAsync(predicate);
+        }
         public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
 
         public void Update(T entity) => _dbSet.Update(entity);

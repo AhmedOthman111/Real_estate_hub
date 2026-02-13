@@ -1,0 +1,563 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RealEstateHub.API</name>
+    </assembly>
+    <members>
+        <member name="M:RealEstateHub.API.Controllers.AdPhotosController.UploadPhoto(System.Int32,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Uploads a photo for a specific ad.
+            </summary>
+            <param name="adId">The ID of the ad to upload the photo for.</param>
+            <param name="file">The image file to upload.</param>
+            <returns>The URL of the uploaded photo.</returns>
+            <response code="200">Returns the URL of the uploaded photo.</response>
+            <response code="400">If no file was uploaded or the file is empty.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdPhotosController.DeletePhoto(System.Int32)">
+            <summary>
+            Deletes a specific photo.
+            </summary>
+            <param name="photoId">The ID of the photo to delete.</param>
+            <returns>No content if the deletion was successful.</returns>
+            <response code="204">The photo was successfully deleted.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+            <response code="404">If the photo was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdPhotosController.SetMainPhoto(System.Int32)">
+            <summary>
+            Sets a specific photo as the main photo for its associated ad.
+            </summary>
+            <param name="photoId">The ID of the photo to set as main.</param>
+            <returns>No content if the operation was successful.</returns>
+            <response code="204">The photo was successfully set as the main photo.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+            <response code="404">If the photo was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.CreateAd(RealEstateHub.Application.CQRS.Ads.Dto.CreateAdDto)">
+            <summary>
+            Used by Owner to Creates a new ad.
+            </summary>
+            <param name="dto">The ad creation details.</param>
+            <returns>The created ad details.</returns>
+            <remarks>
+            - The ad will be created with a "Pending" status and must be approved by an admin before it becomes visible.
+            - All required fields must be provided; otherwise, a validation error will be returned.
+            - Photos can be uploaded separately using the photo upload endpoint after the ad is created.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="200">Ad created successfully. Returns the created ad details.</response>
+            <response code="400">If the ad data is invalid.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.UpdateAd(System.Int32,RealEstateHub.Application.CQRS.Ads.Dto.UpdateAdDto)">
+            <summary>
+            used by Owner to Updates an existing ad .
+            </summary>
+            <param name="id">The ID of the ad to update.</param>
+            <param name="dto">The updated ad details.</param>
+            <returns>The updated ad details.</returns>
+            <remarks>
+            - The ID in the URL must match the ID in the request body; otherwise, a 400 error will be returned.
+            - Only the owner of the ad can update it.
+            - All required fields must be provided in the update payload.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="200">Ad updated successfully. Returns the updated ad details.</response>
+            <response code="400">If the ID mismatch or the ad data is invalid.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.DeleteAd(System.Int32)">
+            <summary>
+            used by owner to Deletes an existing ad .
+            </summary>
+            <param name="id">The ID of the ad to delete.</param>
+            <returns>No content if the deletion was successful.</returns>
+            <remarks>
+            - Only the owner of the ad can delete it.
+            - This action is irreversible; the ad and all associated data (including photos) will be permanently removed.
+            - Any  Saved associated with this ad will also be removed.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="204">Ad deleted successfully.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.ChangeStatus(System.Int32)">
+            <summary>
+            change  the status of Ad to Sold or rented .
+            </summary>
+            <param name="id">The ID of the ad to change status.</param>
+            <returns>No content if the status change was successful.</returns>
+            <remarks>
+            - Only the owner of the ad can change its status.
+            - The Status of ad should be as Active to change it.
+            - This endpoint changes the ad status to "Sold" or "Rented".
+            - An "Sold" and "Rented" ad will not appear in public search results.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="204">Ad status changed successfully.</response>
+            <response code="400">If the status of ad not Active.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.RenewAd(System.Int32,System.Int32)">
+            <summary>
+            Renews an ad for a specified number of days.
+            </summary>
+            <param name="id">The ID of the ad to renew.</param>
+            <param name="durationdays">The number of days to extend the ad's active period.</param>
+            <returns>No content if the renewal was successful.</returns>
+            <remarks>
+            - Only the owner of the ad can renew it.
+            - The duration is added to the current expiration date of the ad.
+            - If the ad has already expired, the duration will be calculated from the current date.
+            - The duration must be a positive integer representing the number of days.
+            - it changes Status to active if it was expired.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="204">Ad renewed successfully.</response>
+            <response code="400">If the duration is invalid.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.GetMyAds">
+            <summary>
+            Retrieves all ads belonging to the authenticated owner.
+            </summary>
+            <returns>A list of the owner's ads.</returns>
+            <remarks>
+            - Returns all ads owned by the authenticated user regardless of their status (Active, Inactive, Pending, Expired, Rejected).
+            - The results include ad details such as title, price, status, creation date, and expiration date.
+            - Photos associated with each ad are also included in the response.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="200">Returns a list of the owner's ads.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.GetAdById(System.Int32)">
+            <summary>
+            Retrieves a specific ad by its ID.
+            </summary>
+            <param name="id">The ID of the ad to retrieve.</param>
+            <returns>The ad details.</returns>
+            <remarks>
+            - This endpoint is publicly accessible and does not require authentication.
+            - Returns the full ad details including title, description, price, photos, comments, replys and owner information.
+            </remarks>
+            <response code="200">Returns the ad details.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.GetAds(RealEstateHub.Application.CQRS.Ads.Dto.AdFilterDto)">
+            <summary>
+            Retrieves a filtered and paginated list of ads .
+            </summary>
+            <param name="filter">The filter and pagination parameters.</param>
+            <returns>A filtered list of ads.</returns>
+            <remarks>
+            - This endpoint is publicly accessible and does not require authentication.
+            - All filter parameters are optional; if none are provided, all active approved ads are returned.
+            - Supports pagination with PageNumber and PageSize parameters.
+            - Supports sorting by various fields such as price, date, and title.
+            - Only approved and active ads are returned in the results.
+            - Available filter parameters:
+              - **City**: Filter by city name.
+              - **perpose**: Filter by sale or rent.
+              - **MinArea / MaxArea**: Filter by unit area range.
+              - **MinPrice / MaxPrice**: Filter by price range.
+              - **CategoryId**: Filter by category.
+              - **SearchTerm**: Search in title and description.
+              - **PageNumber / PageSize**: Pagination controls.
+            </remarks>
+            <response code="200">Returns a filtered list of ads.</response>
+            <response code="400">If the filter parameters are invalid.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.GetPendingAds">
+            <summary>
+            Retrieves all ads with a pending approval status.
+            </summary>
+            <returns>A list of pending ads awaiting approval.</returns>
+            <remarks>
+            - This endpoint is restricted to administrators only.
+            - Returns all ads that are in "Pending" status and awaiting admin review.
+            - Admins can then approve or reject each ad using the respective endpoints.
+            - The response includes all ad details along with owner information.
+            - Requires the "Admin" role.
+            </remarks>
+            <response code="200">Returns a list of pending ads.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Admin role.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.ApproveAd(System.Int32)">
+            <summary>
+            Approves a pending ad, making it visible to the public.
+            </summary>
+            <param name="id">The ID of the ad to approve.</param>
+            <returns>No content if the approval was successful.</returns>
+            <remarks>
+            - This endpoint is restricted to administrators only.
+            - Only ads with a "Pending" status can be approved.
+            - Once approved, the ad becomes active and visible in public search results.
+            - The ad owner receive a mail notification that their ad has been approved.
+            - The ad's expiration timer starts from the moment of approval.
+            - Requires the "Admin" role.
+            </remarks>
+            <response code="204">Ad approved successfully.</response>
+            <response code="400">If the status of ad is not Pending.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Admin role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AdsController.RejectAd(System.Int32,RealEstateHub.Application.CQRS.Ads.Dto.RejectAdDto)">
+            <summary>
+            Rejects a pending ad  .
+            </summary>
+            <param name="id">The ID of the ad to reject.</param>
+            <param name="dto">The optional rejection details The rejection reason.</param>
+            <returns>No content if the rejection was successful.</returns>
+            <remarks>
+            - This endpoint is restricted to administrators only.
+            - Only ads with a "Pending" status can be rejected.
+            - A rejection reason is optional provided to inform the ad owner why their ad was not approved.
+            - The ad owner receive a mail notification with the rejection reason.
+            - Requires the "Admin" role.
+            </remarks>
+            <response code="204">Ad rejected successfully.</response>
+            <response code="400">If the rejection reason is missing or invalid.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Admin role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AuthController.RegisterCustomer(RealEstateHub.Application.CQRS.Auth.Dto.RegisterCustomerDto)">
+            <summary>
+            Registers a new customer account.
+            </summary>
+            <param name="dto">The customer registration required details.</param>
+            <returns>The registration result.</returns>
+            <response code="200">Customer registered successfully.</response>
+            <response code="400">If the registration data is invalid or if email or username is allready created.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AuthController.RegisterOwner(RealEstateHub.Application.CQRS.Auth.Dto.RegisterOwnerDto)">
+            <summary>
+            Registers a new owner account.
+            </summary>
+            <param name="dto">The owner registration required details.</param>
+            <returns>The registration result.</returns>
+            <response code="200">Owner registered successfully.</response>
+            <response code="400">If the registration data is invalid or if email or username is allready created.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AuthController.ConfirmEmail(System.String,System.String)">
+            <summary>
+            Confirms a user's email address using the provided token.
+            </summary>
+            <remarks>
+            This endpoint is called auto from mail that user recived when account is created.
+            </remarks>
+            <param name="email">The email address to confirm.</param>
+            <param name="token">The email confirmation token.</param>
+            <returns>The email confirmation result.</returns>
+            <response code="200">Email confirmed successfully.</response>
+            <response code="400">If the email or token is invalid.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AuthController.Login(RealEstateHub.Application.CQRS.Auth.Dto.LoginDto)">
+            <summary>
+            Authenticates a user and returns a login token.
+            </summary>
+            <remarks>
+            - Usser can login using Email or UserName.
+            - The user's email must be confirmed before logging in.
+            - Returns a JWT token upon successful authentication.
+            - The token should be included in the Authorization header for subsequent requests:
+              `Authorization: Bearer {token}`
+            </remarks>
+            <param name="dto">The login credentials.</param>
+            <returns>The authentication result including the token.</returns>
+            <response code="200">Login successful. Returns authentication token.</response>
+            <response code="401">If the credentials are invalid.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AuthController.ForgotPassword(System.String)">
+            <summary>
+            Sends a password reset OTP to the specified email address.
+            </summary>
+            <param name="email">The email address associated with the account.</param>
+            <returns>A confirmation message that the OTP has been sent if the account exists.</returns>
+            <remarks>
+            - An OTP (One-Time Password) will be sent to the provided email address if an account exists.
+            - The OTP has a limited validity period and can only be used once.
+            - Use the OTP received in the email along with the reset-password endpoint to complete the process.
+            </remarks>
+            <response code="200">Password reset OTP sent successfully (if account exists).</response>
+            <response code="400">If the email is invalid or empty.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AuthController.ResetPassword(RealEstateHub.Application.CQRS.Auth.Dto.ResetPasswordDto)">
+            <summary>
+            Resets the user's password using the provided OTP and new password.
+            </summary>
+            <param name="dto">The password reset details including email ,OTP ,new password and conferim new password  .</param>
+            <returns>A confirmation message that the password has been reset.</returns>
+            <remarks>
+            - The OTP must be obtained from the forgot-password endpoint.
+            - The OTP is valid for a limited time only.
+            - The new password must meet the minimum complexity requirements.
+            - After successful reset, the user can log in with the new password.
+            </remarks>
+            <response code="200">Password reset successfully.</response>
+            <response code="400">If the reset data is invalid or the OTP is expired.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.AuthController.GoogleLogin(RealEstateHub.Application.CQRS.Auth.Dto.GoogleLoginDto)">
+            <summary>
+            Authenticates a user using their Google account OAuth.
+            </summary>
+            <param name="dto">The Google authentication details including the ID token and the role of him .</param>
+            <returns>The authentication result including the token.</returns>
+            <remarks>
+            - The ID token must be obtained from Google's OAuth 2.0 authentication flow on the client side.
+            - If the user does not have an existing account, one will be created automatically.
+            - Email confirmation is not required for Google-authenticated accounts.
+            - Returns a JWT token upon successful authentication.
+            - The token should be included in the Authorization header for subsequent requests:
+              `Authorization: Bearer {token}`
+            </remarks>
+            <response code="200">Google login successful. Returns authentication token.</response>
+            <response code="403">If the Google authentication fails or the account is forbidden.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.CommentsController.CreateComment(RealEstateHub.Application.CQRS.CommentReply.DTO.CreateCommentDto)">
+            <summary>
+            Creates a new comment on an ad by Customer.
+            </summary>
+            <param name="dto">The comment creation details as adId and Comment Content.</param>
+            <returns>The created comment details.</returns>
+            <remarks>
+            - Only customers can create comments on ads.
+            - The authenticated customer will be assigned as the comment author automatically.
+            - Comments are publicly visible on the ad listing.
+            - The ad must exist and be in an active state to accept comments.
+            - The comment content must not be empty or exceed the maximum character limit.
+            - Requires the "Customer" role.
+            </remarks>
+            <response code="200">Comment created successfully. Returns the created comment details.</response>
+            <response code="400">If the comment data is invalid or ad status is not active.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Customer role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.CommentsController.CreateReply(RealEstateHub.Application.CQRS.CommentReply.DTO.ReplyCommentDto)">
+            <summary>
+            Creates a reply to an existing comment on an ad by owner.
+            </summary>
+            <param name="dto">The reply details as comment id and reply content.</param>
+            <returns>The created reply details.</returns>
+            <remarks>
+            - Only the ad owner can reply to comments on their own ads.
+            - The authenticated owner will be assigned as the reply author automatically.
+            - Replies are publicly visible under the parent comment on the ad listing.
+            - The parent comment must exist and belong to an ad owned by the authenticated owner.
+            - The reply content must not be empty or exceed the maximum character limit.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="200">Reply created successfully. Returns the created reply details.</response>
+            <response code="400">If the reply data is invalid.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role or does not own the ad.</response>
+            <response code="404">If the parent comment was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.CommentsController.DeleteComment(System.Int32)">
+            <summary>
+            Deletes a comment made by the authenticated customer.
+            </summary>
+            <param name="id">The ID of the comment to delete.</param>
+            <returns>No content if the deletion was successful.</returns>
+            <remarks>
+            - Only the customer who created the comment can delete it.
+            - This action is irreversible; the comment will be permanently removed.
+            - Any replies associated with this comment may also be removed.
+            - The comment must exist and belong to the authenticated customer.
+            - Requires the "Customer" role.
+            </remarks>
+            <response code="204">Comment deleted successfully.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Customer role or does not own the comment.</response>
+            <response code="404">If the comment was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.CommentsController.DeleteReply(System.Int32)">
+            <summary>
+            Deletes a reply made by the authenticated owner.
+            </summary>
+            <param name="id">The ID of the reply to delete.</param>
+            <returns>No content if the deletion was successful.</returns>
+            <remarks>
+            - Only the owner who created the reply can delete it.
+            - This action is irreversible; the reply will be permanently removed.
+            - The reply must exist and belong to the authenticated owner.
+            - Deleting a reply does not affect the parent comment.
+            - Requires the "Owner" role.
+            </remarks>
+            <response code="204">Reply deleted successfully.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Owner role or does not own the reply.</response>
+            <response code="404">If the reply was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.CommentsController.GetByAdId(System.Int32)">
+            <summary>
+            Retrieves all comments and their replies for a specific ad.
+            </summary>
+            <param name="adId">The ID of the ad to retrieve comments for.</param>
+            <returns>A list of comments and their associated replies for the specified ad.</returns>
+            <remarks>
+            - This endpoint is publicly accessible and does not require authentication.
+            - Returns all comments associated with the specified ad.
+            - Each comment includes its nested replies from the ad owner.
+            - Comments are typically ordered by creation date (newest first or oldest first).
+            - The response includes comment details such as:
+              - **Comment ID**: The unique identifier of the comment.
+              - **Content**: The text content of the comment.
+              - **Author Name**: The name of the customer who posted the comment.
+              - **Created Date**: The date and time the comment was posted.
+              - **Replies**: A list of owner replies associated with each comment.
+            - Returns an empty list if no comments exist for the specified ad.
+            </remarks>
+            <response code="200">Returns a list of comments and replies for the ad.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.ProfilesController.GetMyCustomerProfile">
+            <summary>
+            Retrieves the authenticated customer's profile information.
+            </summary>
+            <remarks>
+            Requires Customer role authorization.
+            The customer ID is extracted from the authenticated user's claims.
+            </remarks>
+            <response code="200">Returns the customer profile data.</response>
+            <response code="401">Unauthorized if the user is not authenticated.</response>
+            <response code="403">Forbidden if the user does not have the Customer role.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.ProfilesController.UpdateCustomerProfile(RealEstateHub.Application.CQRS.Profile.Dto.UpdateCustomerProfileDto)">
+            <summary>
+            Updates the authenticated customer's profile information.
+            </summary>
+            <remarks>
+            Requires Customer role authorization.
+            The customer ID is retrieved from the authenticated user's claims.
+            </remarks>
+            <param name="dto">Updated customer profile data.</param>
+            <response code="204">Profile updated successfully.</response>
+            <response code="400">Invalid input data.</response>
+            <response code="401">Unauthorized if the user is not authenticated.</response>
+            <response code="403">Forbidden if the user does not have the Customer role.</response>
+            
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.ProfilesController.GetOwnerProfile(System.Int32)">
+            <summary>
+            Retrieves the public profile of an owner.
+            </summary>
+            <remarks>
+            This endpoint does not require authentication.
+            Returns publicly visible profile information for the specified owner.
+            </remarks>
+            <param name="id">The unique identifier of the owner.</param>
+            <response code="200">Returns the owner's public profile data.</response>
+            <response code="404">Owner not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.ProfilesController.GetMyOwnerProfile">
+            <summary>
+            Retrieves the authenticated owner's profile with sensetive data.
+            </summary>
+            <remarks>
+            Requires Owner role authorization.
+            The owner ID is extracted from the authenticated user's claims.
+            </remarks>
+            <response code="200">Returns the owner's profile data.</response>
+            <response code="401">Unauthorized if the user is not authenticated.</response>
+            <response code="403">Forbidden if the user does not have the Owner role.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.ProfilesController.UpdateOwnerProfile(RealEstateHub.Application.CQRS.Profile.Dto.UpdateOwnerProfileDto)">
+            <summary>
+            Updates the authenticated owner's profile information.
+            </summary>
+            <remarks>
+            Requires Owner role authorization.
+            The owner ID is retrieved from the authenticated user's claims.
+            </remarks>
+            <param name="dto">Updated owner profile data.</param>
+            <response code="204">Profile updated successfully.</response>
+            <response code="400">Invalid input data.</response>
+            <response code="401">Unauthorized if the user is not authenticated.</response>
+            <response code="403">Forbidden if the user does not have the Owner role.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.RatingsController.CreateRate(RealEstateHub.Application.CQRS.Rating.Dto.CreateRatingDto)">
+            <summary>
+            Creates a new rating for an ad owner.
+            </summary>
+            <param name="dto">The rating creation details.</param>
+            <returns>The created rating details.</returns>
+            <remarks>
+            - Only customers can create ratings for ad owners.
+            - The authenticated customer will be assigned as the rating author automatically.
+            - The rating value must be within the accepted range (e.g., 1 to 5 stars).
+            - A customer can only rate a specific owner once; duplicate ratings are not allowed.
+            - The review text is optional but recommended to provide feedback context.
+            - The owner's overall average rating will be recalculated after each new rating.
+            - Ratings are publicly visible on the owner's profile.
+            - Requires the "Customer" role.
+            </remarks>
+            <response code="200">Rating created successfully. Returns the created rating details.</response>
+            <response code="400">If the rating data is invalid or the customer has already rated this owner.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Customer role.</response>
+            <response code="404">If the owner was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.RatingsController.GetByOwnerId(System.Int32)">
+            <summary>
+            Retrieves all ratings for a specific ad owner.
+            </summary>
+            <param name="ownerId">The ID of the owner to retrieve ratings for.</param>
+            <returns>A list of ratings and reviews for the specified owner.</returns>
+            <remarks>
+            - This endpoint is publicly accessible and does not require authentication.
+            - Returns all ratings and reviews associated with the specified owner.
+            - The response includes rating details such as:
+              - **Rating ID**: The unique identifier of the rating.
+              - **Value**: The star rating value (e.g., 1 to 5).
+              - **Review**: The optional text review left by the customer.
+              - **Customer Name**: The name of the customer who submitted the rating.
+              - **Created Date**: The date and time the rating was submitted.
+            - Ratings are typically ordered by creation date (newest first).
+            - Returns an empty list if no ratings exist for the specified owner.
+            </remarks>
+            <response code="200">Returns a list of ratings for the specified owner.</response>
+            <response code="404">If the owner was not found.</response>
+        </member>
+        <member name="M:RealEstateHub.API.Controllers.SaveAdController.ToggleSaveAd(System.Int32)">
+            <summary>
+            Toggles the saved/unsaved state of an ad for the authenticated customer.
+            </summary>
+            <param name="adId">The ID of the ad to save or unsave.</param>
+            <returns>A confirmation message that the favorite has been toggled.</returns>
+            <remarks>
+            - This endpoint acts as a toggle switch for saving/unsaving an ad.
+            - If the ad is not currently saved, it will be added to the customer's saved list.
+            - If the ad is already saved, it will be removed from the customer's saved list.
+            - The ad must exist and be in an active state to be saved.
+            - There is no limit to the number of ads a customer can save.
+            - The saved state is specific to the authenticated customer and does not affect other users.
+            - Requires the "Customer" role.
+            </remarks>
+            <response code="200">Favorite toggled successfully.</response>
+            <response code="401">If the user is not authenticated.</response>
+            <response code="403">If the user does not have the Customer role.</response>
+            <response code="404">If the ad was not found.</response>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RealEstateHub.API.Controllers.SaveAdController.GetSaveAd" -->
+    </members>
+</doc>

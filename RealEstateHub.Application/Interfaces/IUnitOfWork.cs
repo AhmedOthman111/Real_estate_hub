@@ -10,6 +10,8 @@ namespace RealEstateHub.Application.Interfaces
         IAdPhotosRepository AdPhotosRepo { get; }
         ICommentRepository CommentRepo { get; }
         IReplyRepository ReplyRepo { get; }
+        IRatingRepository RatingRepo { get; }
+        ISaveAdRepository SaveAdRepo { get; }
         Task SaveChangesAsync();
 
     }

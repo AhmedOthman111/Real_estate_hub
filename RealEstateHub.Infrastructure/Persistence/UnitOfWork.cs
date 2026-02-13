@@ -1,11 +1,6 @@
 ﻿using RealEstateHub.Application.Interfaces;
 using RealEstateHub.Application.Interfaces.IRep;
 using RealEstateHub.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateHub.Infrastructure.Persistence
 {
@@ -19,8 +14,14 @@ namespace RealEstateHub.Infrastructure.Persistence
         public IAdPhotosRepository AdPhotosRepo { get; }
         public ICommentRepository CommentRepo { get; }
         public IReplyRepository ReplyRepo { get; }
+        public IRatingRepository RatingRepo { get; }
+        public ISaveAdRepository SaveAdRepo { get; }
 
-        public UnitOfWork(ApplicationDbContext context, IAdRepository adRepository, IOwnerRepository owner, ICategoryRepository category, IAdPhotosRepository adPhotosRepo , ICommentRepository commentRepo, IReplyRepository replyRepo)
+        public UnitOfWork(ApplicationDbContext context, IAdRepository adRepository,
+                            IOwnerRepository owner, ICategoryRepository category,
+                            IAdPhotosRepository adPhotosRepo, ICommentRepository commentRepo,
+                            IReplyRepository replyRepo, IRatingRepository ratingRepo
+                            , ISaveAdRepository saveAdRepo)
         {
             _context = context;
             Ad = adRepository;
@@ -29,6 +30,8 @@ namespace RealEstateHub.Infrastructure.Persistence
             AdPhotosRepo = adPhotosRepo;
             CommentRepo = commentRepo;
             ReplyRepo = replyRepo;
+            RatingRepo = ratingRepo;
+            SaveAdRepo = saveAdRepo;
         }
 
         public async Task SaveChangesAsync()

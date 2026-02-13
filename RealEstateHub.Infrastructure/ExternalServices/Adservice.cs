@@ -102,11 +102,17 @@ namespace RealEstateHub.Infrastructure.ExternalServices
 
             var owner = await _uow.Owner.GetByAppUserIdAsync(AUOwnerId);
             if (ad.OwnerId != owner.Id)
-                throw new BusinessException("You are not authorized to delete this ad.");
+                throw new BusinessException("You are not authorized to change status of this ad.");
 
-            if (ad.Purpose == AdPurpose.Sale) ad.Status = AdStatus.Sold;
-            else if (ad.Purpose == AdPurpose.Rent) ad.Status = AdStatus.Rented;
-            else throw new BusinessException(" Changing the ad status is not allowed.");
+            if (ad.Status == AdStatus.Active)
+            {
+                if (ad.Purpose == AdPurpose.Sale) ad.Status = AdStatus.Sold;
+                else if (ad.Purpose == AdPurpose.Rent) ad.Status = AdStatus.Rented;
+            }
+            else
+            {
+                throw new BusinessException(" Changing the ad status is not allowed."); 
+            }
 
             _uow.Ad.Update(ad);
             await _uow.SaveChangesAsync();

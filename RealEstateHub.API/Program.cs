@@ -4,6 +4,7 @@ using RealEstateHub.API.Middlewares;
 using RealEstateHub.Application.Interfaces;
 using RealEstateHub.Infrastructure;
 using RealEstateHub.Infrastructure.DataSeeder;
+using System.Reflection;
 
 namespace RealEstateHub.API
 {
@@ -22,8 +23,14 @@ namespace RealEstateHub.API
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
+           
+            builder.Services.AddSwaggerGen(c =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+          
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

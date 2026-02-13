@@ -95,7 +95,11 @@ namespace RealEstateHub.Infrastructure
 
             // register mediatar
 
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly));
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly);
+                cfg.Lifetime = ServiceLifetime.Scoped; 
+            });
 
 
             // register Validators
@@ -116,6 +120,8 @@ namespace RealEstateHub.Infrastructure
             services.AddScoped<IAdPhotosRepository , AdPhotosRepository>();
             services.AddScoped<ICommentRepository , CommentRepository>();
             services.AddScoped<IReplyRepository , ReplyRepository>();
+            services.AddScoped<IRatingRepository , RatingRepository>();
+            services.AddScoped<ISaveAdRepository, SaveAdRepository>();
 
 
             
@@ -144,6 +150,12 @@ namespace RealEstateHub.Infrastructure
             services.AddScoped<IAdPhotosService , AdPhotosService>();
             
             services.AddScoped<ICommentReplyService , CommentReplyService>();
+
+            services.AddScoped<IRatingService , RatingService>();
+
+            services.AddScoped<ISaveAdService , SaveAdService>();
+
+            services.AddScoped<IProfileService , ProfileService>();
 
 
 

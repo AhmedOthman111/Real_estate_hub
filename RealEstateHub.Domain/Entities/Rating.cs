@@ -10,7 +10,7 @@ namespace RealEstateHub.Domain.Entities
     {
         public int Id { get; set; }
         public int Stars { get; set; } 
-        public string Review { get; set; }
+        public string? Review { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public int OwnerId { get; set; }

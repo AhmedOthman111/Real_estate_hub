@@ -62,13 +62,14 @@ namespace RealEstateHub.Infrastructure.ExternalServices
 
             if (photo.IsMain && ad.Photos.Count > 1)
             {
-                var otherPhoto = await _uow.AdPhotosRepo.FindAsync(p => p.AdId == photo.AdId && p.Id != photoId);
-                var newMain = otherPhoto
-                    .OrderBy(p => p.Id)
-                    .FirstOrDefault();
+                var otherPhotos = await _uow.AdPhotosRepo .FindAsync(p => p.AdId == photo.AdId && p.Id != photoId);
 
-                if (newMain != null)
+                if (otherPhotos.Any())
                 {
+                    var newMain = otherPhotos
+                        .OrderBy(p => p.Id)
+                        .First();
+
                     newMain.IsMain = true;
                     _uow.AdPhotosRepo.Update(newMain);
                 }

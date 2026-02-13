@@ -28,6 +28,8 @@ namespace RealEstateHub.Infrastructure.ExternalServices
             var ad = await _unitOfWork.Ad.GetByIdAsync(dto.AdId);
             var customer = await _userManager.FindByIdAsync(customerid);
 
+            if (ad.Status != Domain.Enums.AdStatus.Active) throw new BusinessException("Ad is not active to add a comment");
+          
             var comment = new Comment()
             {
                 Message = dto.Content,

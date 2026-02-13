@@ -19,6 +19,9 @@ namespace RealEstateHub.Infrastructure.Data.Configurations
             builder.Property(x => x.AppUserId)
                 .IsRequired();
 
+            builder.HasIndex(x => x.AppUserId)
+                    .IsUnique();
+
             builder.Property(x => x.WhatsappNumber)
                 .IsRequired().HasMaxLength(11);
          
